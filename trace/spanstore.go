@@ -50,7 +50,7 @@ func (i internalOnly) ReportActiveSpans(name string) []*SpanData {
 	defer s.mu.Unlock()
 	for activeSpan := range s.active {
 		if s, ok := activeSpan.(*span); ok {
-			out = append(out, s.makeSpanData())
+			out = append(out, s.MakeSpanData())
 		}
 	}
 	return out

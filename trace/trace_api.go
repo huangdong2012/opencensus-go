@@ -84,6 +84,9 @@ func NewContext(parent context.Context, s *Span) context.Context {
 // Ideally users should interact with Spans by calling the functions in this
 // package that take a Context parameter.
 type SpanInterface interface {
+	// MakeSpanData 自定义
+	// 方便外部在End()之前获取span数据
+	MakeSpanData() *SpanData
 
 	// IsRecordingEvents returns true if events are being recorded for this span.
 	// Use this check to avoid computing expensive annotations when they will never

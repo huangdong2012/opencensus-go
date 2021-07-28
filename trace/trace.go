@@ -288,7 +288,7 @@ func (s *span) End() {
 		exp, _ := exporters.Load().(exportersMap)
 		mustExport := s.spanContext.IsSampled() && len(exp) > 0
 		if s.spanStore != nil || mustExport {
-			sd := s.makeSpanData()
+			sd := s.MakeSpanData()
 			sd.EndTime = internal.MonotonicEndTime(sd.StartTime)
 			if s.spanStore != nil {
 				s.spanStore.finished(s, sd)
@@ -304,7 +304,7 @@ func (s *span) End() {
 
 // makeSpanData produces a SpanData representing the current state of the Span.
 // It requires that s.data is non-nil.
-func (s *span) makeSpanData() *SpanData {
+func (s *span) MakeSpanData() *SpanData {
 	var sd SpanData
 	s.mu.Lock()
 	sd = *s.data
