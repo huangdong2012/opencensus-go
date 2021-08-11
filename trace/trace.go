@@ -112,6 +112,16 @@ type SpanContext struct {
 
 type contextKey struct{}
 
+func ExtractSpanContext(ctx context.Context) *SpanContext {
+	if val := ctx.Value(contextKey{}); val != nil {
+		if sp, ok := val.(*Span); ok {
+			sc := sp.SpanContext()
+			return &sc
+		}
+	}
+	return nil
+}
+
 // FromContext returns the Span stored in a context, or nil if there isn't one.
 func (t *tracer) FromContext(ctx context.Context) *Span {
 	s, _ := ctx.Value(contextKey{}).(*Span)
